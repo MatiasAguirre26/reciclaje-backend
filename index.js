@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
 
-
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
