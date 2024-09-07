@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import HTTP_STATUS from '../helpers/httpStatus.js';
 import { generateToken } from '../utils/tokenManagement.js';
 
-// (solo para ejemplo)
+// (solo para ejemplo despues se va cambiar la logica)
 const users = [];
 
 // controlador para inicio de session 
