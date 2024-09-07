@@ -3,7 +3,7 @@ import HTTP_STATUS from '../helpers/httpStatus.js';
 import { generateToken } from '../utils/tokenManagement.js';
 
 // (solo para ejemplo)
-//const users = [];
+const users = [];
 
 // controlador para inicio de session 
 export const login = (req, res) => {

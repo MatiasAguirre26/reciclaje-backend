@@ -1,7 +1,7 @@
 import { verifyToken } from '../utils/tokenManagement.js';
 import HTTP_STATUS from '../helpers/httpStatus.js';
 
-const authMiddleware = (req, res, next) => {
+const usersMiddleware = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   
   if (!token) {
@@ -17,4 +17,4 @@ const authMiddleware = (req, res, next) => {
   next();
 };
 
-export default authMiddleware;
+export default usersMiddleware;
