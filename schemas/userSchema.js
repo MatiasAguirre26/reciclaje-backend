@@ -1,8 +1,5 @@
 import Joi from 'joi';
 
-
-
-
 // validacion de los datos del usuario 
 export const loginSchema = Joi.object({
   email: Joi.string().email().required(),

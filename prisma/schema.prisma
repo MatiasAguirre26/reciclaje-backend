@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -11,4 +6,92 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+model Benefits {
+  id                 BigInt  @id @default(autoincrement())
+  discountPercentage Float
+  locals             String
+  coupons            Coupon[]
+
+  @@map("benefits")
+}
+
+// Modelo de cupones
+model Coupon {
+  id             BigInt   @id @default(autoincrement())
+  userId         BigInt?
+  benefitsId     BigInt?
+  code           String   @unique
+  discountValue  Float
+  expirationDate DateTime
+  user           User?    @relation(fields: [userId], references: [id])
+  benefits       Benefits? @relation(fields: [benefitsId], references: [id])
+  @@map("coupon")
+}
+
+
+// Modelo de materiales
+model Material {
+  id          BigInt  @id @default(autoincrement())
+  name        String
+  pointsPerKg Int
+  details     TransactionDetail[]
+  @@map("material")
+}
+
+// Modelo de puntos de reciclaje
+model RecyclingPoint {
+  id          BigInt  @id @default(autoincrement())
+  name        String
+  address     String
+  contact     String?
+  openingHours String?
+  transactions Transaction[]
+
+  @@map("recycling_point")
+}
+
+// Modelo de transacciones
+model Transaction {
+  id                BigInt  @id @default(autoincrement())
+  userId            BigInt?
+  recyclingPointId  BigInt?
+  adminId           BigInt?
+  transactionDate   DateTime @default(now())
+  totalPoints       Int
+  user              User?    @relation("UserTransactions", fields: [userId], references: [id])
+  admin             User?    @relation("AdminTransactions", fields: [adminId], references: [id])
+  recyclingPoint    RecyclingPoint? @relation(fields: [recyclingPointId], references: [id])
+  state             Boolean
+  details           TransactionDetail[]
+  @@map("transaction")
+}
+
+// Modelo de detalles de transacciones
+model TransactionDetail {
+  id            BigInt  @id @default(autoincrement())
+  transactionId BigInt?
+  materialId    BigInt?
+  weight        Float
+  points        Int
+  transaction   Transaction? @relation(fields: [transactionId], references: [id])
+  material      Material?    @relation(fields: [materialId], references: [id])
+  @@map("transaction_detail")
+}
+
+// Modelo de usuarios
+model User {
+  id          BigInt  @id @default(autoincrement())
+  name        String
+  username    String   @unique
+  email       String   @unique
+  password    String
+  role        String
+  points      Int      @default(0)
+  coupons     Coupon[]
+  transactions Transaction[] @relation("UserTransactions")
+  adminTransactions Transaction[] @relation("AdminTransactions")
+  @@map("users")
 }

@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors';
 import dotenv from 'dotenv';
 import errorMiddleware  from './middleware/errorMiddleware.js';
-import  usersRoutes  from './routes/usersRoutes.js';
+import  authRoutes  from './routes/authRoutes.js';
 
 
 dotenv.config()
@@ -18,7 +18,7 @@ app.use(express.json());
 
 
 //  endpoints auth
-app.use('/api/users', usersRoutes)
+app.use('/api/auth', authRoutes)
 
 
 app.use(errorMiddleware)

@@ -1,11 +1,11 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-
-
-// generacion de tokens para  inicio de session 
-
-export const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+export const generateToken = (user) => {
+  // Convertir BigInt a string
+  const userId = user.id.toString();
+  return jwt.sign({ id: userId, role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
 };
 
 export const verifyToken = (token) => {

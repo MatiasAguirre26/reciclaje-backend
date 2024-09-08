@@ -1,11 +1,24 @@
-import HTTP_STATUS from '../helpers/httpStatus.js';
+import { verifyToken } from "../utils/tokenManagement.js";
+import HTTP_STATUS from "../helpers/httpStatus.js";
 
+const userMiddleware = (req, res, next) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
+  if (!token) {
+    return res
+      .status(HTTP_STATUS.UNAUTHORIZED)
+      .json({ message: "Token no proporcionado" });
+  }
 
-// error para cuando pasa algo en el servidor 
-const errorMiddleware = (err, req, res, next) => {
-  console.error(err.stack);
-  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Error en el servidor' });
+  const decoded = verifyToken(token);
+  if (!decoded) {
+    return res
+      .status(HTTP_STATUS.UNAUTHORIZED)
+      .json({ message: "Token inválido" });
+  }
+
+  req.user = decoded;
+  next();
 };
 
-export default errorMiddleware;
+export default userMiddleware;
