@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "benefits" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "discountPercentage" DOUBLE PRECISION NOT NULL,
     "locals" TEXT NOT NULL,
 
@@ -9,9 +9,9 @@ CREATE TABLE "benefits" (
 
 -- CreateTable
 CREATE TABLE "coupon" (
-    "id" BIGSERIAL NOT NULL,
-    "userId" BIGINT,
-    "benefitsId" BIGINT,
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER,
+    "benefitsId" INTEGER,
     "code" TEXT NOT NULL,
     "discountValue" DOUBLE PRECISION NOT NULL,
     "expirationDate" TIMESTAMP(3) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE "coupon" (
 
 -- CreateTable
 CREATE TABLE "material" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "pointsPerKg" INTEGER NOT NULL,
 
@@ -30,7 +30,7 @@ CREATE TABLE "material" (
 
 -- CreateTable
 CREATE TABLE "recycling_point" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "contact" TEXT,
@@ -41,10 +41,10 @@ CREATE TABLE "recycling_point" (
 
 -- CreateTable
 CREATE TABLE "transaction" (
-    "id" BIGSERIAL NOT NULL,
-    "userId" BIGINT,
-    "recyclingPointId" BIGINT,
-    "adminId" BIGINT,
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER,
+    "recyclingPointId" INTEGER,
+    "adminId" INTEGER,
     "transactionDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "totalPoints" INTEGER NOT NULL,
     "state" BOOLEAN NOT NULL,
@@ -54,9 +54,9 @@ CREATE TABLE "transaction" (
 
 -- CreateTable
 CREATE TABLE "transaction_detail" (
-    "id" BIGSERIAL NOT NULL,
-    "transactionId" BIGINT,
-    "materialId" BIGINT,
+    "id" SERIAL NOT NULL,
+    "transactionId" INTEGER,
+    "materialId" INTEGER,
     "weight" DOUBLE PRECISION NOT NULL,
     "points" INTEGER NOT NULL,
 
@@ -65,7 +65,7 @@ CREATE TABLE "transaction_detail" (
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
