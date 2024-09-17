@@ -10,7 +10,7 @@ datasource db {
 
 
 model Benefits {
-  id                 BigInt  @id @default(autoincrement())
+  id                 Int  @id @default(autoincrement())
   discountPercentage Float
   locals             String
   coupons            Coupon[]
@@ -20,9 +20,9 @@ model Benefits {
 
 // Modelo de cupones
 model Coupon {
-  id             BigInt   @id @default(autoincrement())
-  userId         BigInt?
-  benefitsId     BigInt?
+  id             Int   @id @default(autoincrement())
+  userId         Int?
+  benefitsId     Int?
   code           String   @unique
   discountValue  Float
   expirationDate DateTime
@@ -34,7 +34,7 @@ model Coupon {
 
 // Modelo de materiales
 model Material {
-  id          BigInt  @id @default(autoincrement())
+  id          Int  @id @default(autoincrement())
   name        String
   pointsPerKg Int
   details     TransactionDetail[]
@@ -43,7 +43,7 @@ model Material {
 
 // Modelo de puntos de reciclaje
 model RecyclingPoint {
-  id          BigInt  @id @default(autoincrement())
+  id          Int  @id @default(autoincrement())
   name        String
   address     String
   contact     String?
@@ -55,10 +55,10 @@ model RecyclingPoint {
 
 // Modelo de transacciones
 model Transaction {
-  id                BigInt  @id @default(autoincrement())
-  userId            BigInt?
-  recyclingPointId  BigInt?
-  adminId           BigInt?
+  id                Int  @id @default(autoincrement())
+  userId            Int?
+  recyclingPointId  Int?
+  adminId           Int?
   transactionDate   DateTime @default(now())
   totalPoints       Int
   user              User?    @relation("UserTransactions", fields: [userId], references: [id])
@@ -71,9 +71,9 @@ model Transaction {
 
 // Modelo de detalles de transacciones
 model TransactionDetail {
-  id            BigInt  @id @default(autoincrement())
-  transactionId BigInt?
-  materialId    BigInt?
+  id            Int  @id @default(autoincrement())
+  transactionId Int?
+  materialId    Int?
   weight        Float
   points        Int
   transaction   Transaction? @relation(fields: [transactionId], references: [id])
@@ -83,7 +83,7 @@ model TransactionDetail {
 
 // Modelo de usuarios
 model User {
-  id          BigInt  @id @default(autoincrement())
+  id          Int  @id @default(autoincrement())
   name        String
   username    String   @unique
   email       String   @unique
