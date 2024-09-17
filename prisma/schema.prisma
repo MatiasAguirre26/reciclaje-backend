@@ -18,6 +18,7 @@ model Benefits {
   @@map("benefits")
 }
 
+
 // Modelo de cupones
 model Coupon {
   id             BigInt   @id @default(autoincrement())
@@ -95,3 +96,4 @@ model User {
   adminTransactions Transaction[] @relation("AdminTransactions")
   @@map("users")
 }
+

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import errorMiddleware  from './middleware/errorMiddleware.js';
 import  authRoutes  from './routes/authRoutes.js';
+import couponRoutes  from './routes/couponRoutes.js';
 
 
 dotenv.config()
@@ -15,9 +16,11 @@ app.use(cors({
 }))
 app.use(express.json());
 
-
-//  endpoints auth
+// endpoints auth
 app.use('/api/auth', authRoutes)
+
+// endpoints coupon//reward
+app.use('/api/coupons', couponRoutes)
 
 
 app.use(errorMiddleware)
