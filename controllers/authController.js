@@ -6,8 +6,8 @@ import HTTP_STATUS from "../helpers/httpStatus.js";
 const prisma = new PrismaClient();
 // Registro de usuario
 export const register = async (req, res) => {
-  console.log('Método de la solicitud:', req.method);
-  console.log('Datos recibidos:', req.body);
+  //console.log('Método de la solicitud:', req.method);
+  //console.log('Datos recibidos:', req.body);
   const { name, username, email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword) {
@@ -42,6 +42,7 @@ export const register = async (req, res) => {
       .json({ message: "Usuario registrado exitosamente", user: newUser });
   } catch (error) {
     console.log(error)
+    console.log('req.user:', req.user);
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: "Error al registrar usuario", error });
