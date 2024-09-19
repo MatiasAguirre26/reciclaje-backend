@@ -67,7 +67,7 @@ export const redeemCoupon = async (req, res) => {
     if (user.points < coupon.discountValue) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: 'Puntos insuficientes' });
     }
-
+     
     // Transacción para restar puntos y canjear el cupón
     await prisma.$transaction([
       prisma.user.update({
@@ -85,4 +85,5 @@ export const redeemCoupon = async (req, res) => {
     console.error(error);
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Error al canjear cupón' });
   }
+  
 };
