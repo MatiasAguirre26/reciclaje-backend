@@ -72,7 +72,7 @@ export const login = async (req, res) => {
 
     return res
       .status(HTTP_STATUS.OK)
-      .json({ message: "tokens generado", token });
+      .json({ message: "tokens generado", token, userId:user.id });
   } catch (error) {
     console.log("error en el login", error);
     return res
