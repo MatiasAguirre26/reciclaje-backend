@@ -45,8 +45,8 @@ model Material {
 // Modelo de puntos de reciclaje
 model RecyclingPoint {
   id          Int  @id @default(autoincrement())
-  name        String
-  address     String
+  name        String?
+  address     String?
   contact     String?
   openingHours String?
   transactions Transaction[]
@@ -57,15 +57,15 @@ model RecyclingPoint {
 // Modelo de transacciones
 model Transaction {
   id                Int  @id @default(autoincrement())
-  userId            Int?
+  userId            Int
   recyclingPointId  Int?
   adminId           Int?
-  transactionDate   DateTime @default(now())
-  totalPoints       Int
+  transactionDate   DateTime? @default(now())
+  totalPoints       Int?
   user              User?    @relation("UserTransactions", fields: [userId], references: [id])
   admin             User?    @relation("AdminTransactions", fields: [adminId], references: [id])
   recyclingPoint    RecyclingPoint? @relation(fields: [recyclingPointId], references: [id])
-  state             Boolean
+  state             Boolean?
   details           TransactionDetail[]
   @@map("transaction")
 }
@@ -75,8 +75,8 @@ model TransactionDetail {
   id            Int  @id @default(autoincrement())
   transactionId Int?
   materialId    Int?
-  weight        Float
-  points        Int
+  weight        Float?
+  points        Int?
   transaction   Transaction? @relation(fields: [transactionId], references: [id])
   material      Material?    @relation(fields: [materialId], references: [id])
   @@map("transaction_detail")
