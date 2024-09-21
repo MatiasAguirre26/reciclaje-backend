@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 import errorMiddleware  from './middleware/errorMiddleware.js';
 import  authRoutes  from './routes/authRoutes.js';
 import couponRoutes  from './routes/couponRoutes.js';
-
+import rewardRoutes from './routes/rewardRoutes.js';
+import userMiddleware from './middleware/authMiddleware.js';
 
 dotenv.config()
 const app = express();
@@ -19,9 +20,17 @@ app.use(express.json());
 // endpoints auth
 app.use('/api/auth', authRoutes)
 
-// endpoints coupon//reward
+// endpoints coupon
 app.use('/api/coupons', couponRoutes)
 
+// endpoints reward
+app.use('/api/rewards', rewardRoutes)
+
+// Ruta de prueba para autenticación
+app.get('/api/test', userMiddleware, (req, res) => {
+    res.json({ message: 'Usuario autenticado', user: req.user });
+  });
+  
 
 app.use(errorMiddleware)
 

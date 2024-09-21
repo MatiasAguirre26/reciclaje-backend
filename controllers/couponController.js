@@ -64,6 +64,7 @@ export const redeemCoupon = async (req, res) => {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Usuario no encontrado' });
     }
 
+    
     if (user.points < coupon.discountValue) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: 'Puntos insuficientes' });
     }
