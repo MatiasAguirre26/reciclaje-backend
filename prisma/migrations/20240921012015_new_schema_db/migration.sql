@@ -31,8 +31,8 @@ CREATE TABLE "material" (
 -- CreateTable
 CREATE TABLE "recycling_point" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
+    "name" TEXT,
+    "address" TEXT,
     "contact" TEXT,
     "openingHours" TEXT,
 
@@ -42,12 +42,12 @@ CREATE TABLE "recycling_point" (
 -- CreateTable
 CREATE TABLE "transaction" (
     "id" SERIAL NOT NULL,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
     "recyclingPointId" INTEGER,
     "adminId" INTEGER,
-    "transactionDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "totalPoints" INTEGER NOT NULL,
-    "state" BOOLEAN NOT NULL,
+    "transactionDate" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "totalPoints" INTEGER,
+    "state" BOOLEAN,
 
     CONSTRAINT "transaction_pkey" PRIMARY KEY ("id")
 );
@@ -57,8 +57,8 @@ CREATE TABLE "transaction_detail" (
     "id" SERIAL NOT NULL,
     "transactionId" INTEGER,
     "materialId" INTEGER,
-    "weight" DOUBLE PRECISION NOT NULL,
-    "points" INTEGER NOT NULL,
+    "weight" DOUBLE PRECISION,
+    "points" INTEGER,
 
     CONSTRAINT "transaction_detail_pkey" PRIMARY KEY ("id")
 );
@@ -92,7 +92,7 @@ ALTER TABLE "coupon" ADD CONSTRAINT "coupon_userId_fkey" FOREIGN KEY ("userId") 
 ALTER TABLE "coupon" ADD CONSTRAINT "coupon_benefitsId_fkey" FOREIGN KEY ("benefitsId") REFERENCES "benefits"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "transaction" ADD CONSTRAINT "transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "transaction" ADD CONSTRAINT "transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "transaction" ADD CONSTRAINT "transaction_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
