@@ -3,6 +3,7 @@ import HTTP_STATUS from '../helpers/httpStatus.js';
 
 const prisma = new PrismaClient();
 
+
 // Obtener todas las recompensas
 export const getRewards = async (req, res) => {
     try {
