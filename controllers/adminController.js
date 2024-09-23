@@ -9,7 +9,7 @@ export const getPendingTransactionsForUser = async (req, res) => {
   try {
     const transactions = await prisma.transaction.findMany({
       where: {
-        userId: BigInt(userId),
+        userId: Int(userId),
         state: false,
       },
       include: {
@@ -35,7 +35,7 @@ export const confirmTransaction = async (req, res) => {
 
   try {
     const transaction = await prisma.transaction.findUnique({
-      where: { id: BigInt(transactionId) },
+      where: { id: Int(transactionId) },
       include: {
         details: true,
         user: true,
@@ -54,7 +54,7 @@ export const confirmTransaction = async (req, res) => {
       const { materialId, weight } = material;
 
       const materialInfo = await prisma.material.findUnique({
-        where: { id: BigInt(materialId) },
+        where: { id: Int(materialId) },
       });
 
       if (!materialInfo) {
@@ -68,8 +68,8 @@ export const confirmTransaction = async (req, res) => {
       await prisma.transactionDetail.upsert({
         where: {
           transactionId_materialId: {
-            transactionId: BigInt(transactionId),
-            materialId: BigInt(materialId),
+            transactionId: Int(transactionId),
+            materialId: Int(materialId),
           },
         },
         update: {
@@ -77,8 +77,8 @@ export const confirmTransaction = async (req, res) => {
           points,
         },
         create: {
-          transactionId: BigInt(transactionId),
-          materialId: BigInt(materialId),
+          transactionId: Int(transactionId),
+          materialId: Int(materialId),
           weight,
           points,
         },
@@ -88,16 +88,16 @@ export const confirmTransaction = async (req, res) => {
     }
 
     await prisma.transaction.update({
-      where: { id: BigInt(transactionId) },
+      where: { id: Int(transactionId) },
       data: {
         totalPoints,
         state: true,
-        adminId: BigInt(req.user.id),
+        adminId: Int(req.user.id),
       },
     });
 
     await prisma.user.update({
-      where: { id: BigInt(transaction.userId) },
+      where: { id: Int(transaction.userId) },
       data: {
         points: transaction.user.points + totalPoints,
       },

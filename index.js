@@ -6,6 +6,7 @@ import  authRoutes  from './routes/authRoutes.js';
 import recyclingRoutes from './routes/recyclingRoutes.js';
 import { confirmRecycling } from './controllers/recyclingController.js';
 import couponRoutes  from './routes/couponRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
 
 
 dotenv.config()
@@ -29,6 +30,8 @@ app.use('/api/auth', authRoutes)
 
 // endpoints coupon//reward
 app.use('/api/coupons', couponRoutes)
+
+app.use('/api/chatbot', chatbotRoutes);
 
 
 app.use(errorMiddleware)

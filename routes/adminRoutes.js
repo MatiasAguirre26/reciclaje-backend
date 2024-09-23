@@ -5,10 +5,9 @@ import adminMiddleware from '../middlewares/adminMiddleware.js';
 
 const router = express.Router();
 
-
 router.use(authMiddleware);
-router.use(adminMiddleware);
 
+router.use(adminMiddleware);
 
 router.get('/users/:userId/pending-transactions', getPendingTransactionsForUser);
 
