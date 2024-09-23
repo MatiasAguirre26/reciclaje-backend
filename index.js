@@ -8,6 +8,7 @@ import { confirmRecycling } from './controllers/recyclingController.js';
 import couponRoutes  from './routes/couponRoutes.js';
 import rewardRoutes from './routes/rewardRoutes.js';
 import userMiddleware from './middleware/authMiddleware.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config()
 const app = express();
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //endpoint de reciclaje confirmacion 
 app.use('/api', recyclingRoutes)
-//  endpoints auth
+
 // endpoints auth
 app.use('/api/auth', authRoutes)
 
@@ -34,11 +35,11 @@ app.use('/api/coupons', couponRoutes)
 // endpoints reward
 app.use('/api/rewards', rewardRoutes)
 
-// Ruta de prueba para autenticación
-app.get('/api/test', userMiddleware, (req, res) => {
-    res.json({ message: 'Usuario autenticado', user: req.user });
-  });
-  
+// endpoints users
+app.use('/api/users', userRoutes)
+
+
+
 
 app.use(errorMiddleware)
 

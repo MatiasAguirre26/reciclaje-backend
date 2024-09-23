@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', userMiddleware, getRewards);
 
 // canjear una recompensa
-router.post('/redeem', userMiddleware, redeemReward);
+//router.post('/redeem', userMiddleware, redeemReward);
 
 export default router;
+

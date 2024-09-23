@@ -6,8 +6,8 @@ import HTTP_STATUS from "../helpers/httpStatus.js";
 const prisma = new PrismaClient();
 // Registro de usuario
 export const register = async (req, res) => {
-  //console.log('Método de la solicitud:', req.method);
-  //console.log('Datos recibidos:', req.body);
+  console.log('Método de la solicitud:', req.method);
+  console.log('Datos recibidos:', req.body);
   const { name, username, email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword) {
