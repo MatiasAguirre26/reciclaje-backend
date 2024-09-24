@@ -7,6 +7,7 @@ import recyclingRoutes from './routes/recyclingRoutes.js';
 import { confirmRecycling } from './controllers/recyclingController.js';
 import couponRoutes  from './routes/couponRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
 
 
 dotenv.config()
@@ -33,6 +34,9 @@ app.use('/api/coupons', couponRoutes)
 
 //endpoint admin
 app.use('/api/admin', adminRoutes);
+
+//endpoint chatbot
+app.use('/api/chatbot', chatbotRoutes);
 
 
 app.use(errorMiddleware)
