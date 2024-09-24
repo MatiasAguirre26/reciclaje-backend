@@ -1,13 +1,11 @@
 import express from 'express';
-import { getCoupons, redeemCoupon } from '../controllers/couponController.js';
 import userMidlleware from '../middleware/authMiddleware.js';
-
+import {getUser} from '../controllers/userController.js';
 const router = express.Router();
 
 // Ruta para obtener los cupones disponibles
-router.get('/', userMidlleware, getCoupons);
+router.get('/:id/points', userMidlleware, getUser);
 
 // Ruta para canjear un cupón
-router.post('/redeem', userMidlleware, redeemCoupon);
 
 export default router;
