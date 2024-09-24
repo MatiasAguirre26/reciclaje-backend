@@ -32,10 +32,8 @@ app.use('/api/auth', authRoutes)
 // endpoints coupon 
 app.use('/api/coupons', couponRoutes)
 
-// endpoints reward
-app.use('/api/rewards', rewardRoutes)
 
-// endpoints users
+// endpoints usersPoints
 app.use('/api/users', userRoutes)
 
 
