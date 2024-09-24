@@ -29,7 +29,7 @@ app.use('/api', recyclingRoutes)
 // endpoints auth
 app.use('/api/auth', authRoutes)
 
-// endpoints coupon
+// endpoints coupon 
 app.use('/api/coupons', couponRoutes)
 
 // endpoints reward

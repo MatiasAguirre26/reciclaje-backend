@@ -2,8 +2,8 @@
 import { PrismaClient } from '@prisma/client';
 import HTTP_STATUS from '../helpers/httpStatus.js';
 
-
 const prisma = new PrismaClient();
+
 
 export const getCoupons = async (req, res) => {
   const userId = parseInt(req.user.id, 10); // para la autenticación del usuario

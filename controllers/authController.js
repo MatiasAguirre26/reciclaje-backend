@@ -73,7 +73,7 @@ export const login = async (req, res) => {
 
     return res
       .status(HTTP_STATUS.OK)
-      .json({ message: "tokens generado", token, userId:user.id });
+      .json({ message: "tokens generado", token, userId:user.id, role:user.role });
   } catch (error) {
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
