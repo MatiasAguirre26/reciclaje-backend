@@ -7,7 +7,6 @@ import recyclingRoutes from './routes/recyclingRoutes.js';
 import { confirmRecycling } from './controllers/recyclingController.js';
 import couponRoutes  from './routes/couponRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
-import userMiddleware from './middleware/authMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
 
 
