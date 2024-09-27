@@ -8,6 +8,7 @@ import { confirmRecycling } from './controllers/recyclingController.js';
 import couponRoutes  from './routes/couponRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import chatbotRoutes from './routes/chatbotRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 
 dotenv.config()
@@ -25,11 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //endpoint de reciclaje confirmacion 
 app.use('/api', recyclingRoutes)
-//  endpoints auth
+
 // endpoints auth
 app.use('/api/auth', authRoutes)
 
-// endpoints coupon//reward
+// endpoints coupon 
 app.use('/api/coupons', couponRoutes)
 
 //endpoint admin
@@ -37,6 +38,12 @@ app.use('/api/admin', adminRoutes);
 
 //endpoint chatbot
 app.use('/api/chatbot', chatbotRoutes);
+
+
+// endpoints usersPoints
+app.use('/api/users', userRoutes)
+
+
 
 
 app.use(errorMiddleware)

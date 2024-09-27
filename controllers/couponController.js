@@ -1,19 +1,19 @@
-//import prisma from '../prisma/client'; 
-import { PrismaClient } from '@prisma/client';
-import HTTP_STATUS from '../helpers/httpStatus.js';
+import { PrismaClient } from "@prisma/client";
+import HTTP_STATUS from "../helpers/httpStatus.js";
 
 const prisma = new PrismaClient();
+
+// obtener cupones 
 export const getCoupons = async (req, res) => {
-  const userId = req.userId; // para la autenticación del usuario
+  const userId = parseInt(req.user.id, 10); //  autenticación del usuario
   try {
-    
     // Obtener cupones disponibles y los puntos del usuario
     const coupons = await prisma.coupon.findMany({
       where: {
+        userId: null, //aun no canjeados
         expirationDate: {
-          gte: new Date(), // Solo cupones no expirados
+          gte: new Date(), //  cupones no expirados
         },
-        userId: null, // Aún no canjeados
       },
     });
 
@@ -22,7 +22,9 @@ export const getCoupons = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Usuario no encontrado' });
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ message: "Usuario no encontrado" });
     }
 
     return res.status(HTTP_STATUS.OK).json({
@@ -31,13 +33,19 @@ export const getCoupons = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Error al obtener cupones' });
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error al obtener cupones" });
   }
 };
 
+// canjear cupones
 export const redeemCoupon = async (req, res) => {
+  console.log(req.user);
+  console.log("solicitud recibida para el canje de cupon ", req.body);
+
   const { couponCode } = req.body;
-  const userId = req.userId; // si ya esta la  autenticación configurada
+  const userId = parseInt(req.user.id, 10); // si ya esta la  autenticación configurada
 
   try {
     // Buscar el cupón
@@ -45,21 +53,32 @@ export const redeemCoupon = async (req, res) => {
       where: { code: couponCode },
     });
 
-    if (!coupon || coupon.expirationDate < new Date()) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: 'Cupón no válido o expirado' });
+    console.log("cupon encontrado", coupon);
+
+    if (!coupon || new Date(coupon.expirationDate) < new Date()) {
+      console.log("cupon no valido o expirado");
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: "Cupón no válido o expirado" });
     }
 
     // Obtener el usuario
     const user = await prisma.user.findUnique({
       where: { id: userId },
     });
+    console.log("usuario encontrado", user);
 
     if (!user) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Usuario no encontrado' });
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ message: "Usuario no encontrado" });
     }
 
     if (user.points < coupon.discountValue) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: 'Puntos insuficientes' });
+      console.log("puntos insuficientes");
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ message: "Puntos insuficientes" });
     }
 
     // Transacción para restar puntos y canjear el cupón
@@ -73,10 +92,14 @@ export const redeemCoupon = async (req, res) => {
         data: { userId: userId },
       }),
     ]);
-
-    return res.status(HTTP_STATUS.OK).json({ message: 'Cupón canjeado con éxito' });
+    console.log("canje de puntos exitoso");
+    return res
+      .status(HTTP_STATUS.OK)
+      .json({ message: "Cupón canjeado con éxito" });
   } catch (error) {
     console.error(error);
-    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Error al canjear cupón' });
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error al canjear cupón" });
   }
 };
