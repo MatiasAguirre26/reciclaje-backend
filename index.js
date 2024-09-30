@@ -5,7 +5,7 @@ import errorMiddleware  from './middleware/errorMiddleware.js';
 import  authRoutes  from './routes/authRoutes.js';
 import recyclingRoutes from './routes/recyclingRoutes.js';
 import { confirmRecycling } from './controllers/recyclingController.js';
-import couponRoutes  from './routes/couponRoutes.js';
+//import couponRoutes  from './routes/couponRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import chatbotRoutes from './routes/chatbotRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -31,7 +31,7 @@ app.use('/api', recyclingRoutes)
 app.use('/api/auth', authRoutes)
 
 // endpoints coupon 
-app.use('/api/coupons', couponRoutes)
+//app.use('/api/coupons', couponRoutes)
 
 //endpoint admin
 app.use('/api/admin', adminRoutes);
@@ -42,8 +42,6 @@ app.use('/api/chatbot', chatbotRoutes);
 
 // endpoints usersPoints
 app.use('/api/users', userRoutes)
-
-
 
 
 app.use(errorMiddleware)

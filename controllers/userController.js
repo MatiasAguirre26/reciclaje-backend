@@ -28,3 +28,29 @@ export const getUser = async (req, res) => {
       .json({ message: "error en el servidor" });
   }
 };
+
+export const updateUserPoints = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { points } = req.body;
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        points: points,
+      },
+      select: {
+        points: true,
+      },
+    });
+
+    res.status(HTTP_STATUS.OK).json(updatedUser.points);
+  } catch (error) {
+    console.error("Error al actualizar los puntos del usuario: ", error);
+    res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error en el servidor al actualizar los puntos" });
+  }
+};

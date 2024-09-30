@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCoupons, redeemCoupon } from '../controllers/couponController.js';
+import { getCoupons, redeemCoupon } from '../controllers/_couponController.js';
 import userMidlleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
