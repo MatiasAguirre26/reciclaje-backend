@@ -39,9 +39,7 @@ export const handleRecyclingQuestion = async (req, res, next) => {
         console.log('Respuesta de Cohere:', response);
 
         // Asegurarse de que hay texto en la respuesta
-        const aiResponse = response.body && response.body.text 
-            ? response.body.text.trim() 
-            : "No se pudo obtener una respuesta clara.";
+        const aiResponse = response.text ? response.text.trim() : "No se pudo obtener una respuesta clara.";
 
         if (!aiResponse) {
             console.error('Error de Cohere: Respuesta vacía', response);
