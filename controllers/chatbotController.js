@@ -20,18 +20,12 @@ export const handleRecyclingQuestion = async (req, res, next) => {
             return res.json({ answer: predefinedAnswer.answer });
         }
 
-        const keywords = ["reciclaje", "puntos", "materiales", "aplicación", "clasifico", "plástico", "vidrio", "papel", "latas"];
-        const isRelated = keywords.some(keyword => question.toLowerCase().includes(keyword));
-
-        if (!isRelated) {
-            return res.status(400).json({ error: 'La pregunta no está relacionada con reciclaje o la aplicación.' });
-        }
 
         // Consultar a Cohere sin historial
         const response = await cohere.chat({
             model: "command-r-plus-08-2024",
             message: question,
-            preamble: 'Eres un experto en reciclaje y debes proporcionar respuestas claras y concisas, limitadas a 2-3 oraciones. Evita detalles innecesarios.',
+            preamble: "Eres un experto en reciclaje y el asistente oficial de nuestra aplicación 'Puntos Verdes', diseñada para fomentar el reciclaje mediante recompensas. Tu objetivo es brindar consejos claros y concisos (limitados a 2-3 oraciones) sobre cómo reciclar correctamente y maximizar los puntos que los usuarios pueden obtener. Ayuda a los usuarios a clasificar y entregar sus materiales reciclables de manera adecuada en los puntos de recolección. Además, proporciona información sobre las ubicaciones y horarios de los centros de reciclaje, que incluyen: 9 de Julio, Buenos Aires: lunes a viernes de 9:00 am a 6:00 pm. Parque Rivadavia: todos los días de 8:00 am a 8:00 pm. La Boca: lunes a sábados de 10:00 am a 5:00 pm. Recoleta: todos los días de 9:00 am a 7:00 pm. Explica también cómo los usuarios pueden acumular puntos llevando sus materiales a estos puntos verdes, donde los pesarán y los cambiarán por puntos en la aplicación. Los puntos pueden canjearse por cupones de descuento para supermercados y marcas asociadas. Los usuarios deberán seleccionar un cupón en la aplicación, y si tienen suficientes puntos, podrán completar el canje. Asegúrate de ser amigable y accesible, y de proporcionar respuestas útiles y alineadas con las funcionalidades de la aplicación, sin detalles innecesarios.",
             maxTokens: 150,
         });
 
